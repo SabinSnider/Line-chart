@@ -13,7 +13,7 @@ import MyLineChart from "./lineChart";
 export default function App() {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
- 
+  const [data, setData] = useState([]);
 
   const info = datas["Weekly Adjusted Time Series"]; //using offline data since api limit was 25 per day
   const dates = Object.keys(info);
@@ -31,7 +31,7 @@ export default function App() {
     { label: "MSFT", value: "MSFT" },
   ];
 
-
+  // to handle dropdown state value
   const handleState = async (companyName) => {
       try {
         const response = await fetch(
@@ -53,6 +53,7 @@ export default function App() {
       }
   }
 
+
   return (
     <View style={styles.container}>
       <View style={{ marginBottom: 35 }}>
@@ -72,6 +73,7 @@ export default function App() {
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={(item) => {
+              handleState(item.value);
               setValue(item.value);
             }}
           />
@@ -90,7 +92,7 @@ export default function App() {
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={(item) => {
-              handleState(item.value);
+              // handleState(item.value);
               //   setValue(item.value);
               setIsFocus(false);
             }}
@@ -113,7 +115,7 @@ export default function App() {
         />
       </View>
 
-      <View><MyLineChart/></View>
+      {/* <View><MyLineChart/></View> */}
     </View>
   );
 }
